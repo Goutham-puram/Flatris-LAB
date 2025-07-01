@@ -7,10 +7,9 @@ trigger:
 - master
 
 pool:
-  name: Default 
+  name: Default
   demands:
     - agent.name -equals smartlite
-
 
 steps:
 - task: NodeTool@0
@@ -19,6 +18,7 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
+    cd web
     npm install
     npm run build
-  displayName: 'npm install and build'
+  displayName: 'npm install and build React app'
