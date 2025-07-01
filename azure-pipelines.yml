@@ -14,20 +14,34 @@ steps:
 
   - script: |
       npm install
+    workingDirectory: 'web'
     displayName: 'Install Dependencies'
 
   - script: |
       npm run build
+    workingDirectory: 'web'
     displayName: 'Build Project'
 
-  - script: |
-      npm run start
-    displayName: 'Run Production Server (Optional)'
-    condition: false  # Set to `true` if you want to run prod server here
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(Build.SourcesDirectory)/web'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/flatris.zip'
+      replaceExistingArchive: true
+    displayName: 'Archive Web Folder for Deployment'
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: 'web/.next'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/flatris.zip'
       ArtifactName: 'flatris-next-build'
       publishLocation: 'Container'
-    displayName: 'Publish .next Build Artifact'
+    displayName: 'Publish Build Artifact'
+
+  - task: AzureWebApp@1
+    inputs:
+      azureSubscription: 'az-flatristst-conn'   
+      appType: 'webApp'
+      appName: 'flatristst'                    
+      package: '$(Build.ArtifactStagingDirectory)/flatris.zip'
+    displayName: 'Deploy to Azure Web App'
