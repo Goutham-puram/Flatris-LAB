@@ -4,21 +4,19 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- master
+  - master
 
 pool:
   name: Default
-  demands:
-    - agent.name -equals smartlite
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '20.x'
-  displayName: 'Install Node.js'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '20.x'
+    displayName: 'Install Node.js'
 
-- script: |
-    cd web
-    npm install
-    npm run build
-  displayName: 'npm install and build React app'
+  - script: |
+      cd web
+      npm install
+      npm run build
+    displayName: 'npm install and build React app'
