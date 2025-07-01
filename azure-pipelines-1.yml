@@ -8,6 +8,9 @@ trigger:
 
 pool:
   name: Default
+  demands:
+    - agent.name -equals smartlite
+
 
 steps:
   - task: NodeTool@0
