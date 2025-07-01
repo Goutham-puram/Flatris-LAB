@@ -1,23 +1,33 @@
-# Node.js with React
-# Build a Node.js project that uses React.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
 trigger:
-- master
+  - master
 
 pool:
-  name: Default 
+  name: Default
   demands:
     - agent.name -equals smartlite
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '20.x'
-  displayName: 'Install Node.js'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '20.x'
+    displayName: 'Install Node.js'
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+  - script: |
+      npm install
+    displayName: 'Install Dependencies'
+
+  - script: |
+      npm run build
+    displayName: 'Build Project'
+
+  - script: |
+      npm run start
+    displayName: 'Run Production Server (Optional)'
+    condition: false  # Set to `true` if you want to run prod server here
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: 'web/.next'
+      ArtifactName: 'flatris-next-build'
+      publishLocation: 'Container'
+    displayName: 'Publish .next Build Artifact'
