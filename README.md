@@ -11,3 +11,9 @@
 Thanks [@paulgergely](https://twitter.com/paulgergely) for the initial flat design!
 
 Also see [elm-flatris](https://github.com/w0rm/elm-flatris).
+
+## Development
+
+Flatris uses [Yarn](https://yarnpkg.com/) for managing Node dependencies. Make
+sure you have Yarn installed and run `yarn install` to set up the project before
+running `yarn build` or `yarn test`.
