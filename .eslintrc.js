@@ -1,5 +1,11 @@
 module.exports = {
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
+  parserOptions: {
+    requireConfigFile: false,
+    ecmaVersion: 2020,
+    sourceType: 'module',
+    babelOptions: { presets: ['next/babel', '@babel/preset-flow'] }
+  },
   extends: [
     'eslint:recommended',
     'plugin:import/errors',
