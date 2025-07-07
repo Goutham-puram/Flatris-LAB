@@ -30,7 +30,7 @@ jobs:
           yarn test
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip web/.next
+        run: zip -r release.zip package.json yarn.lock server web/.next startup ecosystem.config.js
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
